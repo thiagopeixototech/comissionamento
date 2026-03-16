@@ -9,6 +9,9 @@
   "scripts": {
     "dev:web": "npm --workspace @teleconcilia/web run dev",
     "dev:api": "npm --workspace @teleconcilia/api run dev",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
     "typecheck": "npm run typecheck --workspaces"

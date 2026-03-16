@@ -1,0 +1,58 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: teleconcilia-api
+    env_file:
+      - .env
+    ports:
+      - "${API_PORT:-3333}:3333"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: teleconcilia-web
+    depends_on:
+      - api
+    env_file:
+      - .env
+    environment:
+      NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL:-http://localhost:3333}"
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: teleconcilia-postgres
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-teleconcilia}"
+      POSTGRES_USER: "${POSTGRES_USER:-teleconcilia}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-teleconcilia123}"
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: teleconcilia-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
