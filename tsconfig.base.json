@@ -10,6 +10,9 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
+      "@teleconcilia/contracts": [
+        "packages/contracts/src/index.ts"
+      ],
       "@teleconcilia/contracts/*": [
         "packages/contracts/src/*"
       ]

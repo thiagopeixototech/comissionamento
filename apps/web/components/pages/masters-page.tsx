@@ -1,9 +1,17 @@
 import { AppShell } from "../app-shell";
 import { DataTable } from "../data-table";
 import styles from "../styles.module.css";
-import { companies, operators, sellers } from "../../lib/mock-data";
+import type { CompanyListItem, OperatorListItem, SellerListItem } from "@teleconcilia/contracts";
 
-export function MastersPage() {
+export function MastersPage({
+  companies,
+  operators,
+  sellers
+}: {
+  companies: CompanyListItem[];
+  operators: OperatorListItem[];
+  sellers: SellerListItem[];
+}) {
   return (
     <AppShell
       eyebrow="Configuracoes base"

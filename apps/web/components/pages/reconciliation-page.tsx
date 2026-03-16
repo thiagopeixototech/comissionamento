@@ -3,9 +3,13 @@ import { DataTable } from "../data-table";
 import { FilterBar } from "../filter-bar";
 import { StatsGrid } from "../stats-grid";
 import styles from "../styles.module.css";
-import { reconciliations } from "../../lib/mock-data";
+import type { ReconciliationListItem } from "@teleconcilia/contracts";
 
-export function ReconciliationPage() {
+export function ReconciliationPage({
+  reconciliations
+}: {
+  reconciliations: ReconciliationListItem[];
+}) {
   return (
     <AppShell
       eyebrow="Analise"

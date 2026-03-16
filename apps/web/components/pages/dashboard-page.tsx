@@ -1,24 +1,27 @@
 import { AppShell } from "../app-shell";
 import { StatsGrid } from "../stats-grid";
 import styles from "../styles.module.css";
-import { dashboardSummary } from "../../lib/mock-data";
+import type { DashboardSummary } from "@teleconcilia/contracts";
 
-const summaryItems = [
-  { label: "Vendas importadas", value: dashboardSummary.totalImportedSales.toLocaleString("pt-BR") },
-  { label: "Conciliadas", value: dashboardSummary.totalReconciled.toLocaleString("pt-BR"), tone: "success" as const },
-  { label: "Nao conciliadas", value: dashboardSummary.totalNotReconciled.toLocaleString("pt-BR"), tone: "warning" as const },
-  { label: "Duplicadas", value: dashboardSummary.totalDuplicates.toLocaleString("pt-BR"), tone: "danger" as const },
-  { label: "Comissao prevista", value: dashboardSummary.estimatedCommission.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }) },
-  { label: "Comissao bloqueada", value: dashboardSummary.blockedCommission.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }), tone: "warning" as const }
-];
+export function DashboardPage({ summary }: { summary: DashboardSummary }) {
+  const summaryItems = [
+    { label: "Vendas importadas", value: summary.totalImportedSales.toLocaleString("pt-BR") },
+    { label: "Conciliadas", value: summary.totalReconciled.toLocaleString("pt-BR"), tone: "success" as const },
+    { label: "Nao conciliadas", value: summary.totalNotReconciled.toLocaleString("pt-BR"), tone: "warning" as const },
+    { label: "Duplicadas", value: summary.totalDuplicates.toLocaleString("pt-BR"), tone: "danger" as const },
+    { label: "Comissao prevista", value: summary.estimatedCommission.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }) },
+    { label: "Comissao bloqueada", value: summary.blockedCommission.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }), tone: "warning" as const }
+  ];
 
-const chartRows = dashboardSummary.charts.reconciliationByOperator.map((item) => ({
-  label: item.label,
-  width: `${item.value}%`,
-  value: `${item.value}%`
-}));
+  const chartRows = (summary.charts.reconciliationByOperator.length > 0
+    ? summary.charts.reconciliationByOperator
+    : [{ label: "Geral", value: Math.round(summary.reconciliationRate) }]
+  ).map((item) => ({
+    label: item.label,
+    width: `${item.value}%`,
+    value: `${item.value}%`
+  }));
 
-export function DashboardPage() {
   return (
     <AppShell
       eyebrow="Visao executiva"

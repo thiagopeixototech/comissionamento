@@ -3,9 +3,9 @@ import { DataTable } from "../data-table";
 import { FilterBar } from "../filter-bar";
 import { WorkflowSteps } from "../workflow-steps";
 import styles from "../styles.module.css";
-import { imports } from "../../lib/mock-data";
+import type { ImportListItem } from "@teleconcilia/contracts";
 
-export function ImportsPage() {
+export function ImportsPage({ imports }: { imports: ImportListItem[] }) {
   return (
     <AppShell
       eyebrow="Operacao"

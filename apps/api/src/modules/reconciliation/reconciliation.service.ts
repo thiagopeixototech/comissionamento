@@ -1,6 +1,11 @@
 import type { ReconciliationListItem } from "@teleconcilia/contracts/reconciliation";
 import { mockReconciliations } from "../../lib/mock-data";
+import { fetchReconciliations } from "./reconciliation.repository";
 
-export function getReconciliationList(): ReconciliationListItem[] {
-  return mockReconciliations;
+export async function getReconciliationList(): Promise<ReconciliationListItem[]> {
+  try {
+    return await fetchReconciliations();
+  } catch {
+    return mockReconciliations;
+  }
 }

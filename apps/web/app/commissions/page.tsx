@@ -1,5 +1,8 @@
 import { CommissionsPage } from "../../components/pages/commissions-page";
+import { getCommissionSummary } from "../../lib/api";
 
-export default function CommissionsRoutePage() {
-  return <CommissionsPage />;
+export default async function CommissionsRoutePage() {
+  const summary = await getCommissionSummary();
+
+  return <CommissionsPage summary={summary} />;
 }

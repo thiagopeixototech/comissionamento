@@ -2,9 +2,9 @@ import { AppShell } from "../app-shell";
 import { DataTable } from "../data-table";
 import { StatsGrid } from "../stats-grid";
 import styles from "../styles.module.css";
-import { commissionSummary } from "../../lib/mock-data";
+import type { CommissionSummary } from "@teleconcilia/contracts";
 
-export function CommissionsPage() {
+export function CommissionsPage({ summary }: { summary: CommissionSummary }) {
   return (
     <AppShell
       eyebrow="Financeiro e comissao"
@@ -23,10 +23,10 @@ export function CommissionsPage() {
       <div className={styles.pageGrid}>
         <StatsGrid
           items={[
-            { label: "Valor total de comissao", value: commissionSummary.totals.totalCommissionAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }), tone: "success" },
-            { label: "Valor bloqueado", value: commissionSummary.totals.totalBlockedAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }), tone: "warning" },
-            { label: "Valor pendente", value: commissionSummary.totals.totalPendingAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }) },
-            { label: "Valor ajustado", value: commissionSummary.totals.totalAdjustedAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }) }
+            { label: "Valor total de comissao", value: summary.totals.totalCommissionAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }), tone: "success" },
+            { label: "Valor bloqueado", value: summary.totals.totalBlockedAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }), tone: "warning" },
+            { label: "Valor pendente", value: summary.totals.totalPendingAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }) },
+            { label: "Valor ajustado", value: summary.totals.totalAdjustedAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }) }
           ]}
         />
 
@@ -44,7 +44,7 @@ export function CommissionsPage() {
               "Base comissionavel",
               "Comissao"
             ]}
-            rows={commissionSummary.sellers.map((item) => [
+            rows={summary.sellers.map((item) => [
               item.sellerName,
               item.totalSales.toLocaleString("pt-BR"),
               item.reconciledSales.toLocaleString("pt-BR"),

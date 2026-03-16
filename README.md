@@ -23,7 +23,11 @@ Plataforma web de conciliacao de vendas para telecom, focada em importacao de mu
 
 1. Copie `.env.example` para `.env`
 2. Suba os containers com `npm run docker:up`
-3. Acesse:
+3. Crie o schema do banco:
+   `docker compose exec -T postgres psql -U teleconcilia -d teleconcilia < database/schema.sql`
+4. Aplique a carga inicial:
+   `docker compose exec -T postgres psql -U teleconcilia -d teleconcilia < database/bootstrap.sql`
+5. Acesse:
    - Web: `http://localhost:3000`
    - API: `http://localhost:3333/health`
 
@@ -38,7 +42,9 @@ Atualizacao em servidor:
 
 1. `git pull`
 2. `docker compose up -d --build`
-3. `docker compose logs -f`
+3. `docker compose exec -T postgres psql -U teleconcilia -d teleconcilia < database/schema.sql`
+4. `docker compose exec -T postgres psql -U teleconcilia -d teleconcilia < database/bootstrap.sql`
+5. `docker compose logs -f`
 
 ## Principios
 

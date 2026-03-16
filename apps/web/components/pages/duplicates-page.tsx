@@ -1,8 +1,8 @@
 import { AppShell } from "../app-shell";
 import styles from "../styles.module.css";
-import { duplicateGroups } from "../../lib/mock-data";
+import type { DuplicateGroup } from "@teleconcilia/contracts";
 
-export function DuplicatesPage() {
+export function DuplicatesPage({ duplicateGroups }: { duplicateGroups: DuplicateGroup[] }) {
   return (
     <AppShell
       eyebrow="Revisao manual"

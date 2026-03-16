@@ -1,5 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import { authRoutes } from "../modules/auth/auth.routes";
+import { healthRoutes } from "../modules/health/health.routes";
 import { dashboardRoutes } from "../modules/dashboard/dashboard.routes";
 import { masterRoutes } from "../modules/masters/masters.routes";
 import { importRoutes } from "../modules/imports/imports.routes";
@@ -8,11 +9,7 @@ import { duplicateRoutes } from "../modules/duplicates/duplicates.routes";
 import { commissionRoutes } from "../modules/commissions/commissions.routes";
 
 export async function registerRoutes(app: FastifyInstance) {
-  app.get("/health", async () => ({
-    status: "ok",
-    service: "teleconcilia-api"
-  }));
-
+  await app.register(healthRoutes, { prefix: "/health" });
   await app.register(authRoutes, { prefix: "/auth" });
   await app.register(masterRoutes, { prefix: "/masters" });
   await app.register(dashboardRoutes, { prefix: "/dashboard" });
